@@ -1,3 +1,7 @@
+#!/bin/bash
+# Bash Script for install Fsociety tools
+# Must run to install tool
+
 clear
 echo "
 ███████╗███████╗ ██████╗  ██████╗██╗███████╗████████╗██╗   ██╗
@@ -14,6 +18,8 @@ echo "
 ██║██║ ╚████║███████║   ██║   ██║  ██║███████╗███████╗███████╗██║  ██║
 ╚═╝╚═╝  ╚═══╝╚══════╝   ╚═╝   ╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝╚═╝  ╚═╝
 ";
+
+sudo chmod +x uninstall
 
 if [ "$PREFIX" = "/data/data/com.termux/files/usr" ]; then
     INSTALL_DIR="$PREFIX/usr/share/doc/fsociety"
@@ -39,7 +45,7 @@ fi
 echo "[✔] Checking directories...";
 if [ -d "$INSTALL_DIR" ]; then
     echo "[◉] A directory fsociety was found! Do you want to replace it? [Y/n]:" ;
-    read mama
+    read -r mama
     if [ "$mama" = "y" ]; then
         if [ "$TERMUX" = true ]; then
             rm -rf "$INSTALL_DIR"
@@ -68,7 +74,7 @@ echo "[✔] Installing ...";
 echo "";
 git clone --depth=1 https://github.com/Manisso/fsociety "$INSTALL_DIR";
 echo "#!$BASH_PATH
-python $INSTALL_DIR/fsociety.py" '${1+"$@"}' > "$INSTALL_DIR/fsociety";
+python $INSTALL_DIR/fsociety.py" "${1+"$@"}" > "$INSTALL_DIR/fsociety";
 chmod +x "$INSTALL_DIR/fsociety";
 if [ "$TERMUX" = true ]; then
     cp "$INSTALL_DIR/fsociety" "$BIN_DIR"
